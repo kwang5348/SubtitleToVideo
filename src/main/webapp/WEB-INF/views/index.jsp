@@ -7,7 +7,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<link rel="stylesheet" href="${root}/css/main.css?ver1" />
+<link rel="stylesheet" href="css/main.css?ver1" />
 <script type="text/javascript">
 function searchAll(){
 	document.getElementById("searchform").action = "${root}/apt.do";
