@@ -49,7 +49,7 @@ public class MainController {
 		return "user/modifyuserinfo";//jsp 호출
 	}
 	
-	@RequestMapping(value = "/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/userlist", method = RequestMethod.GET)
 	public String list(Model model) {
 		List<MemberInfo> list = service.searchAll();
 		System.out.println(list.size());

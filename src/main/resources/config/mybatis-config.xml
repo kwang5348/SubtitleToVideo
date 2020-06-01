@@ -3,6 +3,7 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<mappers>
+		<mapper resource="mappers/housedeal-mapper.xml" />
 		
 		<mapper resource="mappers/memberinfo-mapper.xml" />
 	</mappers>

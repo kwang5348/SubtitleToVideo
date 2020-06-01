@@ -27,6 +27,7 @@ header {
 		<div id="div_menu">
 			<ul>
 				<li><a href="main">메인</a></li>
+				<li><a href="list">검색</a></li>
 				<li><a href="${root}/apt/map.jsp">지도검색</a></li>
 				<li><a href="${root}/notice.do?command=noticeList">공지사항</a></li>
 				<li><a href="mvjoin">회원가입</a></li>
@@ -41,7 +42,7 @@ header {
 					<li><a href="main">메인</a></li>
 					<li><a href="${root}/apt/map.jsp">지도검색</a></li>
 					<li><a href="${root}/notice.do?command=noticeList">공지사항</a></li>
-					<li><a href="list">회원정보 조회</a></li>
+					<li><a href="userlist">회원정보 조회</a></li>
 					<li><a href="logout">로그아웃</a></li>
 				</ul>
 			</div>

@@ -18,15 +18,7 @@ function searchAll(){
 </head>
 <body>
 	<%@ include file="./header.jsp" %>
-	<div id="div_search">
-		<form id="searchform" method="post" action="">
-			<input type="hidden" name="command" value="searchAll">
-			<input type="hidden" name="pg" value="1">
-			<input type="text" name="searchDong" placeholder="동을 입력해주세요." value="">
-			<input type="text" name="searchAptName" placeholder="아파트 명을 입력해주세요." value="">
-			<button type="button" id="searchButton" onclick="javascript:searchAll();">검색</button>
-		</form>
-	</div>
+
 	<div>
 		<div id="map"></div>
 		<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=6b750a756f2b43d52168116509001b3c"></script>
@@ -41,9 +33,8 @@ function searchAll(){
 		</script>
 	</div>
 
-	<footer>
-		<p>HappyHouse_Web_Back_End_서울_11반_김광남_방승환</p>
-	</footer>
+	<%@ include file="./footer.jsp" %>
+
 
 </body>
 </html>
