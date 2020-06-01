@@ -17,7 +17,7 @@ function searchAll(){
 <title>메인 페이지</title>
 </head>
 <body>
-	<%@ include file="../header.jsp" %>
+	<%@ include file="./header.jsp" %>
 	<div id="div_search">
 		<form id="searchform" method="post" action="">
 			<input type="hidden" name="command" value="searchAll">
