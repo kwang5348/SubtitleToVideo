@@ -19,6 +19,8 @@ import com.ssafy.service.PhoneService;
 @Controller
 public class MainController {
 
+	// test 
+	
 	@Autowired
 	PhoneService service;
 
