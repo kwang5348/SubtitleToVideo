@@ -26,11 +26,11 @@ header {
 	<c:if test="${userinfo == null}">
 		<div id="div_menu">
 			<ul>
-				<li><a href="main">메인</a></li>
+				<li><a href="${root}/index.jsp">메인</a></li>
 				<li><a href="${root}/apt/map.jsp">지도검색</a></li>
 				<li><a href="${root}/notice.do?command=noticeList">공지사항</a></li>
-				<li><a href="mvjoin">회원가입</a></li>
-				<li><a href="mvlogin">로그인</a></li>
+				<li><a href="${root}/MainController?act=mvjoin">회원가입</a></li>
+				<li><a href="${root}/MainController?act=mvlogin">로그인</a></li>
 			</ul>
 		</div>
 	</c:if>
@@ -38,22 +38,22 @@ header {
 		<c:if test="${userinfo.user_id == 'admin'}">
 			<div id="div_menu">
 				<ul>
-					<li><a href="main">메인</a></li>
+					<li><a href="${root}/index.jsp">메인</a></li>
 					<li><a href="${root}/apt/map.jsp">지도검색</a></li>
 					<li><a href="${root}/notice.do?command=noticeList">공지사항</a></li>
-					<li><a href="list">회원정보 조회</a></li>
-					<li><a href="logout">로그아웃</a></li>
+					<li><a href="${root}/MainController?act=userlist">회원정보 조회</a></li>
+					<li><a href="${root}/MainController?act=logout">로그아웃</a></li>
 				</ul>
 			</div>
 		</c:if>
 		<c:if test="${userinfo.user_id != 'admin'}">
 			<div id="div_menu">
 				<ul>
-					<li><a href="main">메인</a></li>
+					<li><a href="${root}/index.jsp">메인</a></li>
 					<li><a href="${root}/apt/map.jsp">지도검색</a></li>
 					<li><a href="${root}/notice.do?command=noticeList">공지사항</a></li>
-					<li><a href="mvuserinfo">마이페이지</a></li>
-					<li><a href="logout">로그아웃</a></li>
+					<li><a href="${root}/MainController?act=mvuserinfo">마이페이지</a></li>
+					<li><a href="${root}/MainController?act=logout">로그아웃</a></li>
 				</ul>
 			</div>
 		</c:if>

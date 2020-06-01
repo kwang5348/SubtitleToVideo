@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="root" value="${pageContext.request.contextPath}"/>
 <c:if test="${userinfo == null}">
-	<c:redirect url="/main"/>
+	<c:redirect url="/MainController"/>
 </c:if>
 <c:if test="${userinfo != null}">
 <!DOCTYPE html>
@@ -23,10 +23,10 @@
 		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js"></script>
 		<script type="text/javascript">
 		function moveModify() {
-			document.location.href = "$mvmodify&user_id=${input}";
+			document.location.href = "${root}/MainController?act=mvmodify&user_id=${input}";
 		}
 		function deleteUser() {
-			document.location.href = "$deleteuser/${input}";
+			document.location.href = "${root}/MainController?act=deleteuser&user_id=${input}";
 		}
 		</script>
 		
@@ -34,7 +34,7 @@
 	<body>	
 	<div class="container" align="center">
 		<div class="col-lg-8" align="right">
-		<a href="logout">로그아웃</a>
+		<a href="${root}/MainController?act=logout">로그아웃</a>
 		</div>
 	  <div class="col-lg-8" align="center">
 	  <h2>유저목록</h2> 
@@ -75,7 +75,7 @@
 		      <tr>
 			      <td></td>
 				  <td align="right">
-					<a href="deleteuser/${user.user_id}">회원정보 삭제</a>
+					<a href="${root}/MainController?act=deleteuser&user_id=${user.user_id}">회원정보 삭제</a>
 				  </td>
 			  </tr>
 		    </tbody>

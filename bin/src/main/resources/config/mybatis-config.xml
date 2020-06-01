@@ -3,7 +3,8 @@
 	"http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
 	<mappers>
-		
-		<mapper resource="mappers/memberinfo-mapper.xml" />
+		<mapper resource="mappers/emp.xml" />
+		<mapper resource="mappers/phone-mapper.xml" />
+		<mapper resource="mappers/userinfo-mapper.xml" />
 	</mappers>
 </configuration>
