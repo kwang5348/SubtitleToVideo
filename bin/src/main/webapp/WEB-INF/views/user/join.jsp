@@ -69,7 +69,7 @@ $(document).ready(function() {
 			return;
 		} else {
 			
-			$("#memberform").attr("action", "${root}/MainController").submit();
+			$("#memberform").attr("action", "join").submit();
 		}
 	});
 	 

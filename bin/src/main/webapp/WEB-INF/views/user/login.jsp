@@ -27,13 +27,13 @@ function login() {
 		alert("비밀번호 입력!!!");
 		return;
 	} else {
-		document.getElementById("loginform").action = "${root}/MainController";
+		document.getElementById("loginform").action = "login";
 		document.getElementById("loginform").submit();
 	}
 }
 	 
 function moveJoin() {
-	document.location.href = "${root}/MainController?act=mvjoin";
+	document.location.href = "mvjoin";
 }	
 </script>
 </head>
