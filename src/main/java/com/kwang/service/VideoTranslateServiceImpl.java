@@ -61,10 +61,10 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	public String uploadFile(MultipartFile uploadFile) throws Exception {
 		try {
 			//절대경로 저장
-			//String path = "C:\\Users\\user\\Desktop\\repo\\SubtitleToVideo\\src\\main\\resources\\static\\download\\" + uploadFile.getOriginalFilename();
+			String path = "C:\\Users\\user\\Desktop\\repo\\SubtitleToVideo\\src\\main\\resources\\static\\download\\" + uploadFile.getOriginalFilename();
 			
 			//상대경로 저장
-			String path = uploadFile.getOriginalFilename();
+			//String path = uploadFile.getOriginalFilename();
 			System.out.println("upload 성공!");
 			System.out.println("download 경로 : " + path);
 			uploadFile.transferTo(new File(path));
@@ -77,8 +77,20 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 
 	@Override
 	public String convertToAudio(String filepath) throws Exception {
-		
-		return null;
+		Runtime run = Runtime.getRuntime();
+		//뒤에서 .mp4 스트링을 제거하는 코드인데 입력되는 file형식이 많아지면 수정해야함
+		String resultFile = filepath.substring(0, filepath.length()-4) + ".wav";
+		String command = "ffmpeg -i " + filepath + " " +  resultFile;
+		System.out.println(command);
+		try{
+		    run.exec("cmd.exe chcp 65001");  // cmd에서 한글문제로 썸네일이 만들어지지않을시 cmd창에서 utf-8로 변환하는 명령
+		    run.exec(command);
+		    
+		}catch(Exception e){
+		    System.out.println("error : "+e.getMessage());
+		    e.printStackTrace();
+		}
+		return resultFile;
 		
 	}
 
