@@ -102,6 +102,10 @@ http://www.tooplate.com/view/2098-health
 					<input id="filename"  name="filename" type="file"/>
 					<input type="submit" class="btn btn-primary"/>
 				</form>
+				
+				<form action="fileconvert" >
+					<input type="submit" value="변환" class="btn btn-warning"/>
+				</form>
 			 </div>
           </div>
      </section>

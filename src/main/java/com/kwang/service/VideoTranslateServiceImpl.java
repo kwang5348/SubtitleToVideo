@@ -58,15 +58,27 @@ public class VideoTranslateServiceImpl implements VideoTranslateService {
 	}
 
 	@Override
-	public void uploadFile(MultipartFile uploadFile) throws Exception {
+	public String uploadFile(MultipartFile uploadFile) throws Exception {
 		try {
-			String path = "C:\\Users\\user\\Desktop\\repo\\SubtitleToVideo\\src\\main\\resources\\static\\download\\" + uploadFile.getOriginalFilename();
+			//절대경로 저장
+			//String path = "C:\\Users\\user\\Desktop\\repo\\SubtitleToVideo\\src\\main\\resources\\static\\download\\" + uploadFile.getOriginalFilename();
+			
+			//상대경로 저장
+			String path = uploadFile.getOriginalFilename();
 			System.out.println("upload 성공!");
 			System.out.println("download 경로 : " + path);
 			uploadFile.transferTo(new File(path));
+			return path;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		return null;
+	}
+
+	@Override
+	public String convertToAudio(String filepath) throws Exception {
+		
+		return null;
 		
 	}
 
