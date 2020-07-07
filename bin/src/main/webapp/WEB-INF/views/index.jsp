@@ -97,11 +97,8 @@ http://www.tooplate.com/view/2098-health
              
 						  <source src="" type="video/mp4">
 						  	브라우저가 비디오 태그를 지원하지 않습니다.
-						</video>				
-				<form action="fileupload" method="post" id ="form" name ="form" enctype="multipart/form-data">
-					<input id="filename"  name="filename" type="file"/>
-					<input type="submit" class="btn btn-primary"/>
-				</form>
+						</video>
+				<button type="button" class="btn btn-primary" id="convert" onclick = "location.href ='./main'">변환</button>
 			 </div>
           </div>
      </section>
