@@ -4,7 +4,5 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface VideoTranslateService {
 	public String uploadFile(MultipartFile uploadFile) throws Exception;
-	public void asyncRecognizeWords(String gcsUri) throws Exception;
 	public String convertToAudio(String filepath) throws Exception;
-	
 }

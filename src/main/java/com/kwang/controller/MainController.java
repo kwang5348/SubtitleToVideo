@@ -10,13 +10,15 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.kwang.service.VideoTranslateService;
+import com.kwang.stt.InfiniteStreamRecognize;
+import com.kwang.stt.Recognize;
 
 @Controller
 public class MainController {
 
 	@Autowired
 	VideoTranslateService service;
-
+	
 	
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String moveMain() {
@@ -51,17 +53,35 @@ public class MainController {
 		}
 		
 		System.out.println("uploadFile 완료");
+		
+		if(audioPath == null) {
+			System.out.println("audio 파일을 찾을 수 없습니다.");
+			return "index";
+		}
+		
+		try {
+			System.out.println("make smi 호출 성공");
+			String path = "gs://saveaudio/temp.wav";
+		}catch (Exception e) {
+			e.printStackTrace();
+			System.out.println("make smi호출 실패");
+			
+		}
 		return "index";//jsp 호출
 	}
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
 	public String translateTest() {
 		System.out.println("test 시작");
+		InfiniteStreamRecognize infrec = new InfiniteStreamRecognize();
 		try {
 			String path = "gs://saveaudio/resource/output.wav";
-			service.asyncRecognizeWords(path);;
+			for (int i = 0; i < 10; i++) {				
+				infrec.infiniteStreamingRecognize("en-US");
+			}
 		} catch (Exception e){
 			System.out.println("파일 번역 실패");
+			e.printStackTrace();
 		}
 		System.out.println("test 완료");
 		

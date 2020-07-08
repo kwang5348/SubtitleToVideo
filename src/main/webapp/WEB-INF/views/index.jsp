@@ -103,8 +103,8 @@ http://www.tooplate.com/view/2098-health
 					<input type="submit" class="btn btn-primary"/>
 				</form>
 				
-				<form action="fileconvert" >
-					<input type="submit" value="변환" class="btn btn-warning"/>
+				<form action="test" >
+					<input type="submit" value="테스트" class="btn btn-warning"/>
 				</form>
 			 </div>
           </div>
