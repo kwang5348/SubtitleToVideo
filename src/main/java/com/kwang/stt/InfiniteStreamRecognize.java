@@ -20,6 +20,9 @@ import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
@@ -70,7 +73,7 @@ public class InfiniteStreamRecognize {
   }
 
   /** Performs infinite streaming speech recognition */
-  public static void infiniteStreamingRecognize(String languageCode) throws Exception {
+  public static void infiniteStreamingRecognize(String languageCode, HttpServletRequest servletrequest, HttpSession session) throws Exception {
 	  APIExamTranslate transLator = new APIExamTranslate();
     // Microphone Input buffering
     class MicBuffer implements Runnable {
@@ -131,7 +134,10 @@ public class InfiniteStreamRecognize {
                     convertMillisToDate(correctedTime),
                     alternative.getTranscript(),
                     alternative.getConfidence());
-                System.out.println(transLator.EngToKoR(alternative.getTranscript()));
+                String korsubtitle = transLator.EngToKoR(alternative.getTranscript());
+                session.setAttribute("engsubtitle", alternative.getTranscript());
+                session.setAttribute("korsubtitle", korsubtitle);
+                servletrequest.getRequestDispatcher("index.jsp");
                 isFinalEndTime = resultEndTimeInMS;
                 lastTranscriptWasFinal = true;
               } else {

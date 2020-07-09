@@ -1,6 +1,7 @@
 package com.kwang.controller;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -71,14 +72,13 @@ public class MainController {
 	}
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String translateTest() {
+	public String translateTest(HttpServletRequest request, HttpSession session) {
 		System.out.println("test 시작");
 		InfiniteStreamRecognize infrec = new InfiniteStreamRecognize();
 		try {
 			String path = "gs://saveaudio/resource/output.wav";
-			for (int i = 0; i < 10; i++) {				
-				infrec.infiniteStreamingRecognize("en-US");
-			}
+			infrec.infiniteStreamingRecognize("en-US", request, session);
+			
 		} catch (Exception e){
 			System.out.println("파일 번역 실패");
 			e.printStackTrace();
