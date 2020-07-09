@@ -13,6 +13,8 @@ import com.google.cloud.speech.v1p1beta1.StreamingRecognizeRequest;
 import com.google.cloud.speech.v1p1beta1.StreamingRecognizeResponse;
 import com.google.protobuf.ByteString;
 import com.google.protobuf.Duration;
+import com.kwang.papago.APIExamTranslate;
+
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.concurrent.BlockingQueue;
@@ -20,16 +22,17 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.TimeUnit;
 import javax.sound.sampled.AudioFormat;
 import javax.sound.sampled.AudioSystem;
+import javax.sound.sampled.Clip;
 import javax.sound.sampled.DataLine;
 import javax.sound.sampled.DataLine.Info;
+import javax.sound.sampled.Line;
+import javax.sound.sampled.Mixer;
+import javax.sound.sampled.SourceDataLine;
 import javax.sound.sampled.TargetDataLine;
-
-
-
 
 public class InfiniteStreamRecognize {
 
-  private static final int STREAMING_LIMIT = 10000; // ~5 minutes
+  private static final int STREAMING_LIMIT = 300000; // ~5 minutes
 
   public static final String RED = "\033[0;31m";
   public static final String GREEN = "\033[0;32m";
@@ -37,6 +40,7 @@ public class InfiniteStreamRecognize {
 
   // Creating shared object
   private static volatile BlockingQueue<byte[]> sharedQueue = new LinkedBlockingQueue();
+    
   private static TargetDataLine targetDataLine;
   private static int BYTES_PER_BUFFER = 6400; // buffer size in bytes
 
@@ -51,6 +55,7 @@ public class InfiniteStreamRecognize {
   private static boolean lastTranscriptWasFinal = false;
   private static StreamController referenceToStreamController;
   private static ByteString tempByteString;
+  
 
   public static String convertMillisToDate(double milliSeconds) {
     long millis = (long) milliSeconds;
@@ -66,18 +71,20 @@ public class InfiniteStreamRecognize {
 
   /** Performs infinite streaming speech recognition */
   public static void infiniteStreamingRecognize(String languageCode) throws Exception {
-
+	  APIExamTranslate transLator = new APIExamTranslate();
     // Microphone Input buffering
     class MicBuffer implements Runnable {
-
+    	
+    
       @Override
       public void run() {
         System.out.println(YELLOW);
         System.out.println("Start speaking...Press Ctrl-C to stop");
         targetDataLine.start();
         byte[] data = new byte[BYTES_PER_BUFFER];
-        while (targetDataLine.isOpen()) {
+        while(targetDataLine.isOpen()) {
           try {
+        	  
             int numBytesRead = targetDataLine.read(data, 0, data.length);
             if ((numBytesRead <= 0) && (targetDataLine.isOpen())) {
               continue;
@@ -120,10 +127,11 @@ public class InfiniteStreamRecognize {
                 System.out.print(GREEN);
                 System.out.print("\033[2K\r");
                 System.out.printf(
-                    "%s: %s [confidence: %.2f]\n",
+                    "%s: %s [confidence: %.2f]",
                     convertMillisToDate(correctedTime),
                     alternative.getTranscript(),
                     alternative.getConfidence());
+                System.out.println(transLator.EngToKoR(alternative.getTranscript()));
                 isFinalEndTime = resultEndTimeInMS;
                 lastTranscriptWasFinal = true;
               } else {
@@ -178,6 +186,7 @@ public class InfiniteStreamRecognize {
         // Target data line captures the audio stream the microphone produces.
         targetDataLine = (TargetDataLine) AudioSystem.getLine(targetInfo);
         targetDataLine.open(audioFormat);
+        
         micThread.start();
 
         long startTime = System.currentTimeMillis();
