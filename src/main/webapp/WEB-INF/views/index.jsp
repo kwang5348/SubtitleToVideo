@@ -5,7 +5,31 @@
 
 <!DOCTYPE html>
 <html lang="en">
+<script src="//code.jquery.com/jquery.min.js"></script>
+<script type="text/javascript">
+function executeQuery() {
+	$.ajax({
+	    type: "POST",
+	    url: "print",
+	    dataType:'json',
+	    success: function(data){
+	    	console.log(data);
+	    	$('#beforesubtitle').val(data.beforesubtitle);
+	    	$('#aftersubtitle').val(data.aftersubtitle);
+	    	$('#asyncsubtitle').val(data.asyncsubtitle);
+	    },
+	    error: function(request, status, error){
+	    	alert(request.status + "#" + request.message + "#" + error);
+	    }
+	})
+  	setTimeout(executeQuery, 1000); // you could choose not to continue on failure...
+}
+$(document).ready(function() {
+  // run the first time; all subsequent calls will take care of themselves
+  setTimeout(executeQuery, 1000);
+});
 
+</script>
 <head>
 
   <meta charset="utf-8">
@@ -60,9 +84,13 @@
 		<input type="submit" value="start" class="btn btn-primary"/>
 		<input type="submit" value="end" class="btn btn-warning"/>
 	</form>
+
+	
 	<br>
-	<textarea rows="10" cols="50">${engsubtitle}</textarea>
-	<textarea rows="10" cols="50">${korsubtitle}</textarea>
+	<textarea id="asyncsubtitle" rows="5" cols="100"></textarea>
+	<br>
+	<textarea id="beforesubtitle" rows="5" cols="50"></textarea>
+	<textarea id="aftersubtitle" rows="5" cols="50"></textarea>
 	
 	</center>
 	<br>

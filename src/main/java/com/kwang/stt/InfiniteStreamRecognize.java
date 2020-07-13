@@ -41,6 +41,11 @@ public class InfiniteStreamRecognize {
   public static final String GREEN = "\033[0;32m";
   public static final String YELLOW = "\033[0;33m";
 
+  public static String beforesubtitle = null;
+  public static String aftersubtitle = null;
+  public static String asyncsubtitle = null;
+  
+  
   // Creating shared object
   private static volatile BlockingQueue<byte[]> sharedQueue = new LinkedBlockingQueue();
     
@@ -134,10 +139,13 @@ public class InfiniteStreamRecognize {
                     convertMillisToDate(correctedTime),
                     alternative.getTranscript(),
                     alternative.getConfidence());
-                String korsubtitle = transLator.EngToKoR(alternative.getTranscript());
-                session.setAttribute("engsubtitle", alternative.getTranscript());
-                session.setAttribute("korsubtitle", korsubtitle);
-                servletrequest.getRequestDispatcher("index.jsp");
+                
+                beforesubtitle = alternative.getTranscript();
+                aftersubtitle = transLator.EngToKoR(beforesubtitle);
+//                String korsubtitle = transLator.EngToKoR(alternative.getTranscript());
+//                session.setAttribute("engsubtitle", alternative.getTranscript());
+//                session.setAttribute("korsubtitle", korsubtitle);
+//                servletrequest.getRequestDispatcher("index.jsp");
                 isFinalEndTime = resultEndTimeInMS;
                 lastTranscriptWasFinal = true;
               } else {
@@ -145,6 +153,7 @@ public class InfiniteStreamRecognize {
                 System.out.print("\033[2K\r");
                 System.out.printf(
                     "%s: %s", convertMillisToDate(correctedTime), alternative.getTranscript());
+                asyncsubtitle = alternative.getTranscript();
                 lastTranscriptWasFinal = false;
               }
             }

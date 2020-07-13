@@ -8,8 +8,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.kwang.dto.RecInfo;
 import com.kwang.service.VideoTranslateService;
 import com.kwang.stt.InfiniteStreamRecognize;
 import com.kwang.stt.Recognize;
@@ -20,11 +22,21 @@ public class MainController {
 	@Autowired
 	VideoTranslateService service;
 	
-	
+	InfiniteStreamRecognize infrec = new InfiniteStreamRecognize();
+
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
 	public String moveMain() {
 		System.out.println("main 호출 성공");
 		return "index";//jsp 호출
+	}
+	
+	@RequestMapping(value = "/print")
+	@ResponseBody
+	public RecInfo printTran() {
+		RecInfo rec = new RecInfo(infrec.beforesubtitle, infrec.aftersubtitle, null, infrec.asyncsubtitle);
+		System.out.println(infrec.beforesubtitle);
+		System.out.println(infrec.aftersubtitle);
+		return rec;//jsp 호출
 	}
 	
 	@RequestMapping(value = "/fileupload", method = RequestMethod.POST)
@@ -76,7 +88,6 @@ public class MainController {
 		System.out.println("test 시작");
 		InfiniteStreamRecognize infrec = new InfiniteStreamRecognize();
 		try {
-			String path = "gs://saveaudio/resource/output.wav";
 			infrec.infiniteStreamingRecognize("en-US", request, session);
 			
 		} catch (Exception e){
