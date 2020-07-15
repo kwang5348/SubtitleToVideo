@@ -14,13 +14,22 @@ import com.fasterxml.jackson.annotation.JsonValue;
 public class APIExamTranslate {
 
 	public static void main(String[] args) {
-		EngToKoR("nice to meet you");
+		//EngToKoR("nice to meet you");
 		
 	}
-	
-    public static String EngToKoR (String input) {
+	public static String checkPapagoLang(String input) {
+		String result = null;
+		if(input.equals("en-US")) {
+			result = "en";
+		} else if(input.equals("ja-JP")) {
+			result = "ja";
+		}
+		return result;
+	}
+    public static String EngToKoR (String input, String inputLang) {
         String clientId = "C71eHoYHNr0DQdVsGN5r";//애플리케이션 클라이언트 아이디값";
         String clientSecret = "wmpUx6Jj4D";//애플리케이션 클라이언트 시크릿값";
+        String sourceLang = checkPapagoLang(inputLang);
         try {
             String text = URLEncoder.encode(input, "UTF-8");
             String apiURL = "https://openapi.naver.com/v1/papago/n2mt";
@@ -30,7 +39,7 @@ public class APIExamTranslate {
             con.setRequestProperty("X-Naver-Client-Id", clientId);
             con.setRequestProperty("X-Naver-Client-Secret", clientSecret);
             // post request
-            String postParams = "source=en&target=ko&text=" + text;
+            String postParams = "source="+ sourceLang + "&target=ko&text=" + text;
             con.setDoOutput(true);
             DataOutputStream wr = new DataOutputStream(con.getOutputStream());
             wr.writeBytes(postParams);

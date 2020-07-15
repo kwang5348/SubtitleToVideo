@@ -5,6 +5,7 @@ import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -34,61 +35,17 @@ public class MainController {
 	@ResponseBody
 	public RecInfo printTran() {
 		RecInfo rec = new RecInfo(infrec.beforesubtitle, infrec.aftersubtitle, null, infrec.asyncsubtitle);
-		System.out.println(infrec.beforesubtitle);
-		System.out.println(infrec.aftersubtitle);
 		return rec;//jsp 호출
 	}
 	
-	@RequestMapping(value = "/fileupload", method = RequestMethod.POST)
-	public String uploadFile(HttpServletRequest request, @RequestParam("filename") MultipartFile mfile) throws Exception {
-		System.out.println("uploadFile 호출 성공");
-		String videoPath = null;
-		String audioPath = null;
-		try {
-			System.out.println("upload service 전송 성공");
-			videoPath = service.uploadFile(mfile);		
-		} catch (Exception e) {
-			System.out.println("upload serivce 호출 실패");
-			e.printStackTrace();
-		}
-		
-		if(videoPath == null) {
-			System.out.println("video 파일을 찾을 수 없습니다.");
-			return "index";
-		}
-		
-		try {
-			System.out.println("convertToAudio service 호출 성공");
-			audioPath = service.convertToAudio(videoPath);
-		}catch (Exception e) {
-			System.out.println("convertToAudio serivce 호출 실패");
-			e.printStackTrace();
-		}
-		
-		System.out.println("uploadFile 완료");
-		
-		if(audioPath == null) {
-			System.out.println("audio 파일을 찾을 수 없습니다.");
-			return "index";
-		}
-		
-		try {
-			System.out.println("make smi 호출 성공");
-			String path = "gs://saveaudio/temp.wav";
-		}catch (Exception e) {
-			e.printStackTrace();
-			System.out.println("make smi호출 실패");
-			
-		}
-		return "index";//jsp 호출
-	}
-	
-	@RequestMapping(value = "/test", method = RequestMethod.GET)
-	public String translateTest(HttpServletRequest request, HttpSession session) {
+	@RequestMapping(value = "/start/{cid}", method = RequestMethod.GET)
+	public String startTranslate(@PathVariable int cid, HttpServletRequest request, HttpSession session) {
 		System.out.println("test 시작");
-		InfiniteStreamRecognize infrec = new InfiniteStreamRecognize();
+		//InfiniteStreamRecognize infrec = new InfiniteStreamRecognize();
 		try {
-			infrec.infiniteStreamingRecognize("en-US", request, session);
+			infrec.setFlag(true);
+			String lang = infrec.checkLang(cid);
+			infrec.infiniteStreamingRecognize(lang, request, session);
 			
 		} catch (Exception e){
 			System.out.println("파일 번역 실패");
@@ -96,9 +53,18 @@ public class MainController {
 		}
 		System.out.println("test 완료");
 		
-		return "index";//jsp 호출
+		return "redirect:/";//jsp 호출
 	}
 	
+	@RequestMapping(value = "/stop", method = RequestMethod.GET)
+	public String stopTranslate(HttpServletRequest request) {
+		try {
+			infrec.setFlag(false);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/";//jsp 호출
+	}
 }
 
 

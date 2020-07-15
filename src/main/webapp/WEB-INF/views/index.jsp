@@ -19,14 +19,25 @@ function executeQuery() {
 	    	$('#asyncsubtitle').val(data.asyncsubtitle);
 	    },
 	    error: function(request, status, error){
-	    	alert(request.status + "#" + request.message + "#" + error);
+	    	//alert(request.status + "#" + request.message + "#" + error);
 	    }
 	})
   	setTimeout(executeQuery, 1000); // you could choose not to continue on failure...
 }
+function start_button(){
+	console.log("start");
+	var lang = $("#language").val();
+	var url = "start/" + lang;
+	console.log(url);	
+	document.location.href = url;
+}
+function stop_button(){
+	console.log("stop");
+}
 $(document).ready(function() {
   // run the first time; all subsequent calls will take care of themselves
   setTimeout(executeQuery, 1000);
+
 });
 
 </script>
@@ -78,22 +89,29 @@ $(document).ready(function() {
       <p class="lead">beta 버전이니 오류가 있으면 적극 문의 바랍니다</p>
     </div>
   </header>
+	<br>
 	<center>
-	<br>
-	<form action="test" display="inline">
-		<input type="submit" value="start" class="btn btn-primary"/>
-		<input type="submit" value="end" class="btn btn-warning"/>
-	</form>
 
-	
+	<select id="language" class="mdb-select md-form" searchable="Search here..">
+	  <option value="1">English</option>
+	  <option value="2">Chinese</option>
+	  <option value="3">Japanese</option>
+	</select>
+
+	<input id="start" type="button" value="start" class="btn btn-primary" onclick="start_button();"/>
+	<input id="end" type="button" value="end" class="btn btn-warning" onclick="location.href='stop'"/>
+
+
 	<br>
+	<br>
+	
 	<textarea id="asyncsubtitle" rows="5" cols="100"></textarea>
 	<br>
 	<textarea id="beforesubtitle" rows="5" cols="50"></textarea>
 	<textarea id="aftersubtitle" rows="5" cols="50"></textarea>
 	
-	</center>
 	<br>
+	</center>
 <!--  
   <section id="about">
     <div class="container">
